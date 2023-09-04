@@ -3,7 +3,7 @@ name: Terraform Destroy
 on:
   push:
     tags:
-      - 'destroy-*'  # Trigger on tags with the 'destroy-' prefix
+      - "app2-detroy-*" # Trigger on tags with the 'destroy-' prefix
 
 jobs:
   destroy:
@@ -20,13 +20,13 @@ jobs:
         id: environment
         run: |
           # Extract the environment name from the tag
-          environment=$(echo "${GITHUB_REF#refs/tags/destroy-}")
+          environment=$(echo "${GITHUB_REF#refs/tags/app2-destroy-}")
           echo "::set-output name=environment::${environment}"
         shell: bash
 
       - name: Destroy Terraform Resources
         run: |
-          cd "terraform/${{ steps.environment.outputs.environment }}"
+          cd "terraform/app2/${{ steps.environment.outputs.environment }}"
           terraform init
           terraform destroy -auto-approve
         env:

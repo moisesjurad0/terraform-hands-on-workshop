@@ -3,7 +3,7 @@ name: Terraform Apply
 on:
   push:
     branches:
-      - main  # You can specify which branch to trigger the workflow on
+      - main # You can specify which branch to trigger the workflow on
 
 jobs:
   deploy:
@@ -17,25 +17,25 @@ jobs:
         uses: hashicorp/setup-terraform@v1
 
       - name: Deploy to Dev
-        working-directory: terraform/dev
+        working-directory: terraform/app2/dev
         run: |
           terraform init
           terraform apply -auto-approve
         env:
           TF_VAR_environment: dev
 
-      - name: Deploy to Staging
-        working-directory: terraform/staging
-        run: |
-          terraform init
-          terraform apply -auto-approve
-        env:
-          TF_VAR_environment: staging
+      # - name: Deploy to Staging
+      #   working-directory: terraform/app2/staging
+      #   run: |
+      #     terraform init
+      #     terraform apply -auto-approve
+      #   env:
+      #     TF_VAR_environment: staging
 
-      - name: Deploy to Production
-        working-directory: terraform/production
-        run: |
-          terraform init
-          terraform apply -auto-approve
-        env:
-          TF_VAR_environment: production
+      # - name: Deploy to Production
+      #   working-directory: terraform/app2/production
+      #   run: |
+      #     terraform init
+      #     terraform apply -auto-approve
+      #   env:
+      #     TF_VAR_environment: production
