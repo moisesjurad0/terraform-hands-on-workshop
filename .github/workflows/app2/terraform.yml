@@ -1,0 +1,41 @@
+name: Terraform Apply
+
+on:
+  push:
+    branches:
+      - main  # You can specify which branch to trigger the workflow on
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Deploy to Dev
+        working-directory: terraform/dev
+        run: |
+          terraform init
+          terraform apply -auto-approve
+        env:
+          TF_VAR_environment: dev
+
+      - name: Deploy to Staging
+        working-directory: terraform/staging
+        run: |
+          terraform init
+          terraform apply -auto-approve
+        env:
+          TF_VAR_environment: staging
+
+      - name: Deploy to Production
+        working-directory: terraform/production
+        run: |
+          terraform init
+          terraform apply -auto-approve
+        env:
+          TF_VAR_environment: production
